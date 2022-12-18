@@ -40,24 +40,24 @@ public class LoginFrame extends JFrame {
      * Create the frame.
      */
     public LoginFrame() {
-        setTitle("MANGO CHAT");
+        setTitle("24/7 Chat");
 
         setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(230, 240, 247));
+        contentPane.setBackground(new Color(225,204,236));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
 
         JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(new Color(160,190,223));
+        headerPanel.setBackground(new Color(201,182,228));
 
         JLabel lbUsername = new JLabel("Username");
-        lbUsername.setFont(new Font("Arial", Font.BOLD, 14));
+        lbUsername.setFont(new Font("Noto Sans", Font.BOLD, 16));
 
         JLabel lbPassword = new JLabel("Password");
-        lbPassword.setFont(new Font("Arial", Font.BOLD, 14));
+        lbPassword.setFont(new Font("Noto Sans", Font.BOLD, 16));
 
         txtUsername = new JTextField();
         txtUsername.setColumns(10);
@@ -65,9 +65,9 @@ public class LoginFrame extends JFrame {
         txtPassword = new JPasswordField();
 
         JPanel buttons = new JPanel();
-        buttons.setBackground(new Color(230, 240, 247));
+        buttons.setBackground(new Color(225,204,236));
         JPanel notificationContainer = new JPanel();
-        notificationContainer.setBackground(new Color(230, 240, 247));
+        notificationContainer.setBackground(new Color(225,204,236));
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
                 gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -109,7 +109,7 @@ public class LoginFrame extends JFrame {
 
         JLabel notification = new JLabel("");
         notification.setForeground(Color.RED);
-        notification.setFont(new Font("Times New Roman", Font.PLAIN, 13));
+        notification.setFont(new Font("Roboto", Font.PLAIN, 14));
         notificationContainer.add(notification);
 
         JButton login = new JButton("Log in");
@@ -161,7 +161,7 @@ public class LoginFrame extends JFrame {
                                 public void run() {
                                     try {
                                         // In ra thông báo đăng kí thành công
-                                        int confirm = JOptionPane.showConfirmDialog(null, "Sign up successful\nWelcome to MANGO CHAT", "Sign up successful", JOptionPane.DEFAULT_OPTION);
+                                        int confirm = JOptionPane.showConfirmDialog(null, "Sign up successful\nWelcome to 24/7 Chat", "Sign up successful", JOptionPane.DEFAULT_OPTION);
 
                                         ChatFrame frame = new ChatFrame(username, dis, dos);
                                         frame.setVisible(true);
@@ -184,10 +184,11 @@ public class LoginFrame extends JFrame {
             }
         });
         signup.setEnabled(false);
+        
         buttons.add(signup);
 
-        JLabel headerContent = new JLabel("LOGIN");
-        headerContent.setFont(new Font("Poor Richard", Font.BOLD, 24));
+        JLabel headerContent = new JLabel("LOG IN");
+        headerContent.setFont(new Font("Roboto", Font.BOLD, 24));
         headerPanel.add(headerContent);
         contentPane.setLayout(gl_contentPane);
 

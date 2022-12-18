@@ -30,7 +30,7 @@ public class Server {
     private Socket socket;
     static ArrayList<Handler> clients = new ArrayList<Handler>();
     static ArrayList<Accounts> listAccounts = new ArrayList<Accounts>();
-    private String dataFile = "src\\data\\accounts.txt";
+    private String dataFile = "src\\common\\accounts.txt";
 
    
     private void loadAccounts() {
@@ -103,7 +103,7 @@ public class Server {
                     // Kiểm tra tên đăng nhập đã tồn tại hay chưa
                     if (isExisted(username) == false) {
 
-                        // Tạo một Handler để giải quyết các request từ user này
+                        // Tạo một Handler  để giải quyết các request từ user này
                         Handler newHandler = new Handler(socket, username, password, true, lock);
                         clients.add(newHandler);
 
