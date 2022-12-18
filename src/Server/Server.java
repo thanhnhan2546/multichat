@@ -30,7 +30,7 @@ public class Server {
     private Socket socket;
     static ArrayList<Handler> clients = new ArrayList<Handler>();
     static ArrayList<Accounts> listAccounts = new ArrayList<Accounts>();
-    private String dataFile = "D:\\multi-chat\\Mango-chat-app\\jar\\data\\accounts.txt";
+    private String dataFile = "src\\data\\accounts.txt";
 
    
     private void loadAccounts() {
