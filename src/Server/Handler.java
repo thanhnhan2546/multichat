@@ -5,10 +5,14 @@
  */
 package Server;
 
+import DTO.Message;
+import Data.MessageData;
+import static Server.Server.data;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,6 +29,7 @@ class Handler implements Runnable{
     private String username;
     private String password;
     private boolean isLoggedIn;
+    static MessageData msg = new MessageData();
 
     public Handler(Socket socket, String username, String password, boolean isLoggedIn, Object lock) throws IOException {
         this.socket = socket;
@@ -110,12 +115,27 @@ class Handler implements Runnable{
                     Server.updateOnlineUsers();
                     break;
                 }
-
+                else if(message.equals("selectUser"))   {
+                    String receiver = dis.readUTF();
+                    String sender = dis.readUTF();
+                    System.out.println("receiver: "+ receiver );
+                    ArrayList<Message> mess = msg.list(sender, receiver);
+                    if(!mess.isEmpty()){
+                       for(int i = mess.size() - 1; i >=0; i--){
+                        System.out.println("i: " + mess.get(i).message);
+                    }
+System.out.println("not null");
+                    }else{
+                        System.out.println(" null");
+                    }
+                } 
                 // Yêu cầu gửi tin nhắn dạng văn bản
                 else if (message.equals("Text")){
                     String receiver = dis.readUTF();
                     String content = dis.readUTF();
-
+                    String sender = dis.readUTF();
+                    
+                    data.saveHistoryMessage(sender, receiver, content);
                     for (Handler client: Server.clients) {
                         if (client.getUsername().equals(receiver)) {
                             synchronized (lock) {
@@ -133,7 +153,11 @@ class Handler implements Runnable{
                 else if (message.equals("Emoji")) {
                     String receiver = dis.readUTF();
                     String emoji = dis.readUTF();
-
+                    String sender = dis.readUTF();
+                    System.out.println("emoji: "+ emoji);
+                    String urlEmoji = emoji.replace("\\", "\\\\\\");
+                    System.out.println("url: " + urlEmoji);
+                    data.saveHistoryMessage(sender, receiver, urlEmoji);
                     for (Handler client: Server.clients) {
                         if (client.getUsername().equals(receiver)) {
                             synchronized (lock) {

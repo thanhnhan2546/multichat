@@ -551,14 +551,33 @@ public class ChatFrame extends JFrame {
             }
         });
 
+        onlineUsers.addActionListener (new ActionListener () {
+    public void actionPerformed(ActionEvent e) {
+//        System.out.println("combobox: "+ onlineUsers.getSelectedItem().toString());
+       
+//        System.out.println("selected: "+ selected);
+        if(onlineUsers.getSelectedItem() != null){
+             String selected = onlineUsers.getSelectedItem().toString();
+            try{
+                dos.writeUTF("selectUser");
+            dos.writeUTF(onlineUsers.getSelectedItem().toString());
+            dos.writeUTF(username);
+            }catch (IOException e1){
+             e1.printStackTrace();
+                    newMessage("ERROR" , "Network error!" , true);
+            }
+        }
+    }
+});
         // Set action perform to send button.
         btnSend.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                System.out.println("username"+  username );
                 try {
                     dos.writeUTF("Text");
                     dos.writeUTF(lbReceiver.getText());
                     dos.writeUTF(txtMessage.getText());
+                    dos.writeUTF(username);
                     dos.flush();
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -786,6 +805,7 @@ public class ChatFrame extends JFrame {
                     dos.writeUTF("Emoji");
                     dos.writeUTF(lbReceiver.getText());
                     dos.writeUTF(this.emoji);
+                    dos.writeUTF(username);
                     dos.flush();
                 } catch (IOException e1) {
                     e1.printStackTrace();

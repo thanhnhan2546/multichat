@@ -45,7 +45,6 @@ public class AccountsData {
                 
                 p.username = rs.getString(1);
                 p.password = rs.getString(2);
-                p.name = rs.getString(3);
                 
                 dsPD.add(p);
             }
@@ -54,4 +53,66 @@ public class AccountsData {
         }
         return dsPD;
     }
+      public void create (String username, String password){
+          try{
+              String qry = "INSERT INTO accounts VALUES ('" + username + "','" + password + "')";
+               System.out.println("qry: " + qry);
+            st = conn.createStatement();
+            st.execute(qry);
+          }catch (SQLException e){
+              JOptionPane.showMessageDialog(null, "Error show");
+          }
+      }
+      public String checkTable (String sender, String receiver){
+          String flag = "";
+          try{
+              String qry = "SELECT * " +
+"FROM information_schema.tables " +
+"WHERE table_schema = 'multichat' " +
+"    AND table_name = '"+ sender + "_"+ receiver +"' OR table_name = '"+ receiver + "_"+ sender +"' " +
+"LIMIT 1;";
+               System.out.println("qry: " + qry);
+               
+            st = conn.createStatement();
+           rs = st.executeQuery(qry);
+              if(rs.next()){
+                  flag = rs.getString(3);
+              }else {
+                  flag = "";
+              }
+          }catch (SQLException e){
+              JOptionPane.showMessageDialog(null, "null");
+          }
+          return flag;
+      }
+      public void saveHistoryMessage(String sender, String receiver, String message){
+//          Kiểm tra table trong database đã tồn tại hay chưa
+          String flag = checkTable(sender, receiver);
+        if(flag.isEmpty()){
+            try{
+              String qry = "CREATE TABLE "+ sender + "_"+ receiver + " (sender varchar(255), message varchar(255))";
+               System.out.println("qry: " + qry);
+            st = conn.createStatement();
+            st.execute(qry);
+            saveMessage(sender + "_"+ receiver, sender, message );
+          }catch (SQLException e){
+              JOptionPane.showMessageDialog(null, "Error show");
+          }
+System.out.println("null");
+          }else{
+//            lưu tin nhắn vào database
+            saveMessage(flag, sender, message);
+      }
+        }
+      public void saveMessage(String tableName, String sender, String message){
+          try{
+              String qry = "INSERT INTO "+ tableName + " VALUES ('" + sender + "','" + message + "')";
+               System.out.println("qry: " + qry);
+            st = conn.createStatement();
+            st.execute(qry);
+          }catch (SQLException e){
+              JOptionPane.showMessageDialog(null, "Error show");
+          }
+      }
+      
 }

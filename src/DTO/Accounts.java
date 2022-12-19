@@ -18,7 +18,7 @@ public class Accounts {
     public Accounts(String username, String password, String name) {
         this.username = username;
         this.password = password;
-        this.name = name;
+       
     }
 
     public String getUsername() {
@@ -37,12 +37,6 @@ public class Accounts {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+   
     
 }
